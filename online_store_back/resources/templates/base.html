@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <a href="/"><h1>Магазин</h1></a>
+    </div>
+    <form method="get" action="/search" class="search_form">
+    <input type="text" name="text" placeholder="Поиск" class="search_input" value="{{search_text}}">
+        <input type="submit" value="🔍︎" class="search_button">
+    </form>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'cart' %}"><input type="button"  class="cart_button" value="Корзина"></a>
+    <a href="{% url 'order_list' %}"><input type="button"  class="cart_button" value="Заказы"></a>
+    <a href="{% url 'logout' %}"><input type="button"  class="account_button" value="Выйти"></a>
+    {% else %}
+    <a href="{% url 'login' %}"><input type="button"  class="account_button" value="Войти"></a>
+    {% endif %}
+</header>
+<nav>
+    {% block nav %}
+    {% endblock %}
+</nav>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+</body>
+</html>

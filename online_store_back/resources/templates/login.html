@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<div class="select_form center">
+<form method="post">
+    {% csrf_token %}
+    {{form.errors}}
+    <table class="login_form">
+        <tr>
+            <td><h4>Логин</h4></td>
+            <td>{{form.username}}</td>
+        </tr>
+        <tr>
+            <td><h4>Пароль</h4></td>
+            <td>{{form.password}}</td>
+        </tr>
+    </table>
+
+
+    <input type="submit" value="Войти" class="button">
+</form>
+</div>
+</body>
+</html>

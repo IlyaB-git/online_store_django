@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <table>
+        {% for item in cart %}
+            <tr>
+                <td>
+                    <img src="/media/{{item.product.images.first.image}}" alt="{{product.name}}" class="cart_product_image">
+                    
+                </td>
+                <td>
+                    <a href="{% url 'product' product_id=item.product.pk %}">
+                    <span>{{item.product}}</span><br>
+                    {% if item.product.price_discount %}
+                        <span>{{item.product.price_discount}} руб.</span><br>
+                        <span class="product_price_withouth_discont">{{item.product.price}} руб.</span><br>
+                    {% else %}
+                        <span>{{item.product.price}} руб.</span><br>
+                    {% endif %}
+                    </a>
+                    Количество товара на складе: {{item.product.count}}
+                </td>
+                <td>
+                    <form method="post" action="{% url 'cart_update' %}">
+                        {% csrf_token %}
+                        <input type="number" name="count" value="{{item.count}}">
+                        <input type="hidden" value="{{item.product.pk}}" name="product_id">
+                        <input type="submit" value="&#10004;">
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="{% url 'cart_remove' %}">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{item.product.pk}}" name="product_id">
+                        <input type="hidden" value="remove_one" name="action">
+                        <input type="submit" value="&#10008;">
+                    </form>
+                </td>
+            </tr>
+        
+        
+        
+        
+    {% endfor %}
+    </table>
+    <form action="{% url 'order_create' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Сделать заказ">
+    </form>
+    
+{% endblock %}

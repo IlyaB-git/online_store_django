@@ -1,0 +1,9 @@
+online_store_back/store.sqlite3
+online_store_back/media/
+*.log
+*.pot
+*.pyc
+__pycache__
+/venv/
+/.idea/
+migrations/

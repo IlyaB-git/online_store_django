@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table>
+    {% for item in order %}
+        <tr>
+            <td>
+                <img src="/media/{{item.product.images.first.image}}" alt="{{product.name}}" class="cart_product_image">
+                
+            </td>
+            <td>
+                <a href="{% url 'product' product_id=item.product.pk %}">
+                <span>{{item.product}}</span><br>
+                {% if item.product.price_discount %}
+                    <span>{{item.product.price_discount}} руб.</span><br>
+                    <span class="product_price_withouth_discont">{{item.product.price}} руб.</span><br>
+                {% else %}
+                    <span>{{item.product.price}} руб.</span><br>
+                {% endif %}
+                </a>
+                Количество товара на складе: {{item.product.count}}
+            </td>
+            <td>
+                <span>Количество: {{item.count}}</span>
+            </td>
+        </tr>
+    
+    
+    
+    
+{% endfor %}
+</table>
+
+{% endblock %}

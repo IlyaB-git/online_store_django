@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table>
+    {% for order in order_list %}
+    <tr>
+        
+        <td><img src="{{order.product.images.first.image}}" alt=""></td>
+        <td><a href="{{order.get_absolute_url}}">Создан {{order.date_create}}</a></td>
+        <td>{{order.price}} руб.</td>
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% if add_to_cart == 'success' %}
+    Товар добавлен в корзину
+{% endif %}
+<a href="/category/{{product.category.slug}}">{{product.category.name}}</a><br>
+<div class="product_images">
+    <img src="/media/{{product.images.first.image}}" alt="{{product.name}}" class="product_image">
+    <div class="product_images_list">{% for image in product.images.all %}
+        <img src="/media/{{image.image}}">
+        {% endfor %}
+    </div>
+</div>
+<div class="product_maininfo">
+    <h2>{{product.name}}</h2>
+    {% if product.vendor %}
+    <span>Производитель: <a href="/vendor/{{product.vendor.slug}}">{{product.vendor.name}}</a></span>
+    {% endif %}
+    {% if product.price_discount %}
+    <h1>{{product.price_discount}} руб.</h1>
+    <span class="product_price_withouth_discont">{{product.price}} руб.</span>
+    {% else %}
+    <h1>{{product.price}} руб.</h1>
+    {% endif %}
+    <br>
+    <span>В наличии {{product.count}} шт.</span>
+    <form action="{% url 'cart_add' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="product" value="{{product.pk}}">
+        <input type="number" name="count">
+        <input type="submit" value="Добавить в корзину">
+    </form>
+</div>
+
+
+<div class="product_description">
+    <span>{{product.description}} </span><br>
+    <span>{{product.properties}}</span>
+</div>
+
+
+
+{% endblock %}

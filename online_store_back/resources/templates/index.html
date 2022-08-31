@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<ul class="categories_ul">
+    <span>Категории товаров</span>
+    {% for categ in catalog_categories %}
+        {% if categ.primary_cat == Null %}
+        <li>
+            <a href="/category/{{categ.slug}}">{{categ.name}}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block content %}
+    {% for product in catalog_products_list %}
+        <div class="product_list_el">
+            <a href="/product/{{product.pk}}">
+                <div class="catalog_list_image">
+                    <img src="/media/{{product.images.first.image}}" alt="{{product.name}}">
+                </div>
+                <div class="product_list_text">
+                    <div  class="catalog_list_text_name">{{product.name}}</div>
+                    <div  class="catalog_list_text_price">
+                        {% if product.price_discount %}
+                        <span class="catalog_list_price">{{product.price_discount}} руб.</span>
+                        <span class="catalog_list_price_withouth_discont">{{product.price}} руб.</span>
+                        {% else %}
+                        <span class="catalog_list_price">{{product.price}} руб.</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>   
+        </div>
+        
+        
+        
+    {% endfor %}
+{% endblock %}
